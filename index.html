@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusPulse - Smart Campus Solution</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col md:flex-row">
+
+    <aside class="w-full md:w-64 bg-slate-950 border-r border-slate-800 p-6 flex flex-col justify-between">
+        <div>
+            <div class="flex items-center gap-3 mb-10">
+                <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">CampusPulse</h1>
+                    <p class="text-xs text-slate-500 font-medium tracking-wide">SMART SOLUTIONS</p>
+                </div>
+            </div>
+            
+            <nav class="space-y-2">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/10">
+                    <i class="fa-solid fa-chart-pie text-base"></i> Dashboard Overview
+                </button>
+                <button onclick="switchTab('parking')" id="btn-parking" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200">
+                    <i class="fa-solid fa-square-p text-base"></i> Smart Parking
+                </button>
+                <button onclick="switchTab('complaints')" id="btn-complaints" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200">
+                    <i class="fa-solid fa-circle-exclamation text-base"></i> Complaint System
+                </button>
+                <button onclick="switchTab('notices')" id="btn-notices" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200">
+                    <i class="fa-solid fa-bullhorn text-base"></i> Smart Notice Board
+                </button>
+            </nav>
+        </div>
+        <div class="pt-6 border-t border-slate-800/60 text-xs text-slate-500 font-medium">
+            <p><i class="fa-solid fa-circle text-emerald-500 text-[10px] mr-1.5 animate-pulse"></i> Systems Operational</p>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-6 md:p-10 overflow-y-auto max-w-7xl mx-auto w-full">
+        
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-6 border-b border-slate-800/60">
+            <div>
+                <h2 id="page-title" class="text-2xl md:text-3xl font-bold text-white tracking-tight">Dashboard Overview</h2>
+                <p id="page-desc" class="text-sm text-slate-400 mt-1">Real-time monitoring and campus management terminal.</p>
+            </div>
+            <div class="flex items-center gap-3 bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 text-sm font-medium shadow-sm">
+                <i class="fa-regular fa-calendar text-indigo-400"></i>
+                <span id="live-date" class="text-slate-300">June 15, 2026</span>
+            </div>
+        </header>
+
+        <section id="tab-dashboard" class="tab-content space-y-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 text-indigo-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-square-p text-6xl"></i></div>
+                    <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Parking Availability</p>
+                    <h3 id="dash-parking-count" class="text-3xl font-bold mt-2 text-white">4 / 8 Available</h3>
+                    <div class="w-full bg-slate-800 h-2 rounded-full mt-4 overflow-hidden">
+                        <div id="dash-parking-bar" class="bg-indigo-500 h-full transition-all duration-500" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 text-amber-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-circle-exclamation text-6xl"></i></div>
+                    <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Complaints</p>
+                    <h3 id="dash-complaints-count" class="text-3xl font-bold mt-2 text-white">1 Pending</h3>
+                    <div class="flex gap-4 mt-4 text-xs font-medium text-slate-400">
+                        <span><i class="fa-solid fa-circle text-amber-500 mr-1"></i> <span id="dash-pending-count">1</span> Pending</span>
+                        <span><i class="fa-solid fa-circle text-emerald-500 mr-1"></i> <span id="dash-resolved-count">2</span> Resolved</span>
+                    </div>
+                </div>
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 text-cyan-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-bullhorn text-6xl"></i></div>
+                    <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Notices</p>
+                    <h3 id="dash-notices-count" class="text-3xl font-bold mt-2 text-white">3 Live</h3>
+                    <p class="text-xs text-slate-400 mt-4"><i class="fa-solid fa-clock mr-1 text-cyan-500"></i> Latest: Hackathon Registrations Open</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h4 class="font-bold text-lg text-white">Parking Quick Status</h4>
+                        <button onclick="switchTab('parking')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">View Map →</button>
+                    </div>
+                    <div id="dash-parking-grid" class="grid grid-cols-4 gap-3">
+                        </div>
+                </div>
+                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h4 class="font-bold text-lg text-white">Recent Urgent Notices</h4>
+                        <button onclick="switchTab('notices')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">Open Board →</button>
+                    </div>
+                    <div id="dash-notices-list" class="space-y-3.5">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-parking" class="tab-content hidden space-y-6">
+            <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Main Block Smart Parking Layout</h3>
+                        <p class="text-sm text-slate-400 mt-0.5">Click any available green slot to book/reserve instantly.</p>
+                    </div>
+                    <div class="flex gap-4 text-xs font-semibold">
+                        <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-emerald-500 rounded-sm"></span> Available</span>
+                        <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-rose-500 rounded-sm"></span> Occupied / Booked</span>
+                    </div>
+                </div>
+
+                <div id="parking-slots-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    </div>
+            </div>
+        </section>
+
+        <section id="tab-complaints" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-1 h-fit">
+                <h3 class="text-xl font-bold text-white mb-1">Raise a Complaint</h3>
+                <p class="text-xs text-slate-400 mb-6">File campus issues anonymously or with your ID for fast resolution.</p>
+                
+                <form id="complaint-form" onsubmit="handleComplaintSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Category</label>
+                        <select id="comp-category" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 focus:outline-none focus:border-indigo-500" required>
+                            <option value="Lab & Computers">Lab & IT Infrastructure</option>
+                            <option value="Electricity / AC">Electricity & Air Conditioning</option>
+                            <option value="Canteen Hygiene">Canteen & Cafeteria</option>
+                            <option value="Water Supply">Water Supply / Washrooms</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Room / Location</label>
+                        <input type="text" id="comp-location" placeholder="e.g., Computer Lab 3, GIDA Block" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Issue Description</label>
+                        <textarea id="comp-desc" rows="4" placeholder="Describe the issue clearly..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-xs"></i> Submit Log
+                    </button>
+                </form>
+            </div>
+
+            <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-2 space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Live Status Tracker</h3>
+                    <p class="text-sm text-slate-400 mt-0.5">Track your lodged campus grievances and verification actions live.</p>
+                </div>
+                
+                <div id="complaints-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                    </div>
+            </div>
+        </section>
+
+        <section id="tab-notices" class="tab-content hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                <div class="flex gap-2">
+                    <button onclick="filterNotices('all')" id="filter-all" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-indigo-600 text-white rounded-lg transition-all shadow-sm">All Announcements</button>
+                    <button onclick="filterNotices('Academic')" id="filter-Academic" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Academics</button>
+                    <button onclick="filterNotices('Events')" id="filter-Events" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Events</button>
+                    <button onclick="filterNotices('Placement')" id="filter-Placement" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Placements</button>
+                </div>
+                <div class="text-xs font-medium text-slate-500"><i class="fa-solid fa-circle-info text-indigo-400 mr-1.5"></i> Sorted by latest priority</div>
+            </div>
+
+            <div id="notices-board-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- DATA MANAGEMENT STATE (Using LocalStorage to support dynamic reload actions) ---
+        let parkingSlots = JSON.parse(localStorage.getItem('campus_parking')) || [
+            { id: 'P-101', type: 'Car', occupied: true, occupant: 'Faculty (Dean)' },
+            { id: 'P-102', type: 'Car', occupied: false, occupant: '' },
+            { id: 'P-103', type: 'Car', occupied: true, occupant: 'Visitor MH-04' },
+            { id: 'P-104', type: 'Car', occupied: false, occupant: '' },
+            { id: 'P-105', type: 'Bike', occupied: false, occupant: '' },
+            { id: 'P-106', type: 'Bike', occupied: true, occupant: 'Student UP-53' },
+            { id: 'P-107', type: 'Bike', occupied: false, occupant: '' },
+            { id: 'P-108', type: 'Bike', occupied: true, occupant: 'Faculty' },
+        ];
+
+        let complaints = JSON.parse(localStorage.getItem('campus_complaints')) || [
+            { id: 'CMP-8942', category: 'Electricity / AC', location: 'Audi Room 2', desc: 'Central AC system making excessive grinding sound and vibration.', status: 'Pending', date: 'Just Now' },
+            { id: 'CMP-7641', category: 'Lab & Computers', location: 'Lab 5, 2nd Floor', desc: 'System No 14 and 18 experiencing continuous boot loops during compiler executions.', status: 'Resolved', date: '3 Hours Ago' },
+            { id: 'CMP-4512', category: 'Canteen Hygiene', location: 'Main Canteen Area', desc: 'Water cooler purification filter alert light flashing red.', status: 'Resolved', date: '1 Day Ago' }
+        ];
+
+        const notices = [
+            { id: 1, type: 'Events', label: 'Evolvera Club', title: 'The Ignitia Nexus Randomizer', content: 'The live interactive programming and design challenge event is operational. Build prototypes for selected tracks immediately.', time: 'Just Now', tagColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20', isUrgent: true },
+            { id: 2, type: 'Academic', label: 'Examination Cell', title: 'B.Tech Even Sem Sessionals Schedule', content: 'Detailed timetable files for the second semester sessional internal tests are published on the structural college ERP. Check slots.', time: '2 Hours Ago', tagColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20', isUrgent: false },
+            { id: 3, type: 'Placement', label: 'T&P Cell', title: 'Google Cloud Program Onboarding', content: 'Registered members check Arcade program portals. Lab access keys are being dispatched to formal student email addresses.', time: '1 Day Ago', tagColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20', isUrgent: false },
+            { id: 4, type: 'Events', label: 'Hack2Skill Council', title: 'Hackathon Internal Screening Team selection', content: 'Teams shortlisted for final submission validation must assemble at KIPM Innovators Foundation Room at 2:00 PM sharply.', time: '1 Day Ago', tagColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', isUrgent: true }
+        ];
+
+        // --- APPARATUS INITIALIZATION SETUP ---
+        window.onload = function() {
+            renderParking();
+            renderComplaints();
+            renderNotices('all');
+            updateDashboardMetrics();
+        };
+
+        // --- NAVIGATION CONTROLLER ---
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            // Remove active button styling
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200";
+            });
+
+            // Show active tab
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            // Add active styling to tab button
+            document.getElementById(`btn-${tabId}`).className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/10";
+
+            // Header Content Alterations
+            const titleMap = {
+                'dashboard': ['Dashboard Overview', 'Real-time monitoring and campus management terminal.'],
+                'parking': ['Smart Parking Log', 'Live occupancy metrics of smart infrastructure bays.'],
+                'complaints': ['Grievance Redressal System', 'Lodge campus reports and check ongoing verification states.'],
+                'notices': ['Smart Digital Notice Board', 'Categorized announcements terminal for immediate broadcast.']
+            };
+            document.getElementById('page-title').innerText = titleMap[tabId][0];
+            document.getElementById('page-desc').innerText = titleMap[tabId][1];
+        }
+
+        // --- DASHBOARD COUNTS TRACKER UTILITY ---
+        function updateDashboardMetrics() {
+            const totalSlots = parkingSlots.length;
+            const availableSlots = parkingSlots.filter(s => !s.occupied).length;
+            document.getElementById('dash-parking-count').innerText = `${availableSlots} / ${totalSlots} Available`;
+            document.getElementById('dash-parking-bar').style.width = `${(availableSlots/totalSlots)*100}%`;
+
+            const pendingComp = complaints.filter(c => c.status === 'Pending').length;
+            const resolvedComp = complaints.filter(c => c.status === 'Resolved').length;
+            document.getElementById('dash-complaints-count').innerText = `${pendingComp} Active`;
+            document.getElementById('dash-pending-count').innerText = pendingComp;
+            document.getElementById('dash-resolved-count').innerText = resolvedComp;
+
+            document.getElementById('dash-notices-count').innerText = `${notices.length} Live`;
+
+            // Inject Quick Overviews
+            let quickGridHtml = '';
+            parkingSlots.slice(0, 4).forEach(s => {
+                quickGridHtml += `
+                    <div class="p-3 text-center rounded-xl border text-xs font-semibold ${s.occupied ? 'bg-rose-500/10 border-rose-500/20 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'}">
+                        <div>${s.id}</div>
+                        <div class="text-[10px] opacity-60 mt-0.5">${s.occupied ? 'Full' : 'Open'}</div>
+                    </div>`;
+            });
+            document.getElementById('dash-parking-grid').innerHTML = quickGridHtml;
+
+            let quickNoticeHtml = '';
+            notices.slice(0, 2).forEach(n => {
+                quickNoticeHtml += `
+                    <div class="flex items-start gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-800/60 text-xs">
+                        <span class="w-2 h-2 mt-1.5 rounded-full ${n.isUrgent ? 'bg-rose-500 animate-pulse' : 'bg-indigo-500'}"></span>
+                        <div>
+                            <h5 class="font-bold text-slate-200 line-clamp-1">${n.title}</h5>
+                            <p class="text-slate-500 mt-0.5">${n.label} • ${n.time}</p>
+                        </div>
+                    </div>`;
+            });
+            document.getElementById('dash-notices-list').innerHTML = quickNoticeHtml;
+        }
+
+        // --- FEATURE 1: INTERACTIVE PARKING CONTROLLER ---
+        function renderParking() {
+            const container = document.getElementById('parking-slots-container');
+            container.innerHTML = '';
+            
+            parkingSlots.forEach(slot => {
+                const card = document.createElement('div');
+                card.onclick = () => toggleParkingSlot(slot.id);
+                card.className = `p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 group select-none relative overflow-hidden ${
+                    slot.occupied 
+                    ? 'bg-rose-950/20 border-rose-800/40 hover:border-rose-700/60' 
+                    : 'bg-emerald-950/10 border-emerald-800/40 hover:border-emerald-700/60 hover:bg-emerald-950/20 shadow-md hover:shadow-emerald-950/20'
+                }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-bold tracking-wide text-slate-400">${slot.id}</span>
+                        <i class="fa-solid ${slot.type === 'Car' ? 'fa-car' : 'fa-motorcycle'} text-lg ${slot.occupied ? 'text-rose-400' : 'text-emerald-400 group-hover:scale-110 transition-transform'}"></i>
+                    </div>
+                    <div class="mt-6">
+                        <div class="text-base font-bold ${slot.occupied ? 'text-rose-200' : 'text-emerald-200'}">
+                            ${slot.occupied ? 'Occupied / Reserve' : 'Available'}
+                        </div>
+                        <div class="text-xs text-slate-500 font-medium mt-1 truncate">
+                            ${slot.occupied ? `<i class="fa-regular fa-user text-[10px] mr-1"></i> ${slot.occupant}` : 'Click to book slot'}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleParkingSlot(slotId) {
+            parkingSlots = parkingSlots.map(slot => {
+                if(slot.id === slotId) {
+                    if(slot.occupied) {
+                        // Freeing slot
+                        return { ...slot, occupied: false, occupant: '' };
+                    } else {
+                        // Booking slot
+                        return { ...slot, occupied: true, occupant: 'Self (Student Active Booking)' };
+                    }
+                }
+                return slot;
+            });
+            localStorage.setItem('campus_parking', JSON.stringify(parkingSlots));
+            renderParking();
+            updateDashboardMetrics();
+        }
+
+        // --- FEATURE 2: COMPLAINT CONTROLLER MODAL ACTIONS ---
+        function renderComplaints() {
+            const list = document.getElementById('complaints-list');
+            list.innerHTML = '';
+            
+            complaints.forEach(c => {
+                const item = document.createElement('div');
+                item.className = "p-5 bg-slate-900/60 border border-slate-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:bg-slate-900/90";
+                
+                item.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex items-center flex-wrap gap-2">
+                            <span class="text-xs font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-md">${c.category}</span>
+                            <span class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-location-dot text-[10px] text-slate-500 mr-1"></i> ${c.location}</span>
+                            <span class="text-[11px] text-slate-600 font-medium font-mono">${c.id}</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-300 leading-relaxed">${c.desc}</p>
+                        <div class="text-xs text-slate-500 font-medium"><i class="fa-regular fa-clock text-[10px] mr-1"></i> ${c.date}</div>
+                    </div>
+                    <div class="flex sm:flex-col items-end justify-between sm:justify-center gap-2 border-t sm:border-t-0 border-slate-800/60 pt-3 sm:pt-0">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full ${
+                            c.status === 'Resolved' 
+                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                        }">
+                            <span class="w-1.5 h-1.5 rounded-full ${c.status === 'Resolved' ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}"></span>
+                            ${c.status}
+                        </span>
+                        ${c.status === 'Pending' ? `
+                            <button onclick="resolveComplaint('${c.id}')" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 cursor-pointer bg-indigo-500/5 px-2.5 py-1 rounded-md border border-indigo-500/20 hover:bg-indigo-500/10">Mark Fixed</button>
+                        ` : ''}
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function handleComplaintSubmit(e) {
+            e.preventDefault();
+            const category = document.getElementById('comp-category').value;
+            const location = document.getElementById('comp-location').value;
+            const desc = document.getElementById('comp-desc').value;
+            const randId = 'CMP-' + Math.floor(1000 + Math.random() * 9000);
+
+            const newComplaint = { id: randId, category, location, desc, status: 'Pending', date: 'Just Now' };
+            complaints.unshift(newComplaint);
+            
+            localStorage.setItem('campus_complaints', JSON.stringify(complaints));
+            renderComplaints();
+            updateDashboardMetrics();
+            
+            // Reset Form Values safely
+            document.getElementById('comp-location').value = '';
+            document.getElementById('comp-desc').value = '';
+        }
+
+        function resolveComplaint(id) {
+            complaints = complaints.map(c => c.id === id ? { ...c, status: 'Resolved' } : c);
+            localStorage.setItem('campus_complaints', JSON.stringify(complaints));
+            renderComplaints();
+            updateDashboardMetrics();
+        }
+
+        // --- FEATURE 3: DIGITAL PINBOARD NOTICE BOARD CONTROLLER ---
+        function renderNotices(filter) {
+            const grid = document.getElementById('notices-board-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? notices : notices.filter(n => n.type === filter);
+            
+            filtered.forEach(n => {
+                const card = document.createElement('div');
+                card.className = `p-6 bg-slate-950 rounded-2xl border transition-all duration-200 flex flex-col justify-between hover:-translate-y-1 ${n.isUrgent ? 'border-rose-500/30 shadow-md shadow-rose-950/10' : 'border-slate-800/80 hover:border-slate-700'}`;
+                
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-md border ${n.tagColor}">${n.type}</span>
+                            <span class="text-xs font-semibold text-slate-500">${n.time}</span>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="text-xs font-bold text-slate-400 tracking-wide uppercase">${n.label}</div>
+                            <h4 class="text-base font-bold text-white leading-snug">${n.title}</h4>
+                            <p class="text-sm font-medium text-slate-400 leading-relaxed">${n.content}</p>
+                        </div>
+                    </div>
+                    ${n.isUrgent ? `
+                        <div class="mt-6 pt-3 border-t border-rose-500/10 flex items-center gap-2 text-xs font-bold text-rose-400">
+                            <i class="fa-solid fa-circle-nodes animate-spin"></i> Priority Broadcast Directive Action
+                        </div>
+                    ` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterNotices(type) {
+            document.querySelectorAll('.notice-filter-btn').forEach(btn => {
+                btn.className = "notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all";
+            });
+            document.getElementById(`filter-${type}`).className = "notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-indigo-600 text-white rounded-lg transition-all shadow-sm";
+            renderNotices(type);
+        }
+    </script>
+</body>
+</html>
