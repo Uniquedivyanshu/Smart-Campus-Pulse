@@ -40,155 +40,174 @@
                 </button>
             </nav>
         </div>
-        <div class="pt-6 border-t border-slate-800/60 text-xs text-slate-500 font-medium">
-            <p><i class="fa-solid fa-circle text-emerald-500 text-[10px] mr-1.5 animate-pulse"></i> Systems Operational</p>
+        
+        <div class="mt-auto pt-6 border-t border-slate-800/60">
+            <div class="bg-slate-900/50 border border-slate-800 p-3 rounded-xl">
+                <p class="text-[10px] uppercase font-bold tracking-wider text-slate-500">Developed By</p>
+                <p class="text-sm font-semibold text-slate-200 mt-0.5"><i class="fa-solid fa-code text-xs text-indigo-400 mr-1.5"></i> Divyanshu Singh</p>
+            </div>
+            <div class="pt-4 text-xs text-slate-500 font-medium">
+                <p><i class="fa-solid fa-circle text-emerald-500 text-[10px] mr-1.5 animate-pulse"></i> Systems Operational</p>
+            </div>
         </div>
     </aside>
 
-    <main class="flex-1 p-6 md:p-10 overflow-y-auto max-w-7xl mx-auto w-full">
+    <main class="flex-1 p-6 md:p-10 overflow-y-auto max-w-7xl mx-auto w-full flex flex-col justify-between">
         
-        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-6 border-b border-slate-800/60">
-            <div>
-                <h2 id="page-title" class="text-2xl md:text-3xl font-bold text-white tracking-tight">Dashboard Overview</h2>
-                <p id="page-desc" class="text-sm text-slate-400 mt-1">Real-time monitoring and campus management terminal.</p>
-            </div>
-            <div class="flex items-center gap-3 bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 text-sm font-medium shadow-sm">
-                <i class="fa-regular fa-calendar text-indigo-400"></i>
-                <span id="live-date" class="text-slate-300">June 15, 2026</span>
-            </div>
-        </header>
-
-        <section id="tab-dashboard" class="tab-content space-y-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 text-indigo-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-square-p text-6xl"></i></div>
-                    <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Parking Availability</p>
-                    <h3 id="dash-parking-count" class="text-3xl font-bold mt-2 text-white">4 / 8 Available</h3>
-                    <div class="w-full bg-slate-800 h-2 rounded-full mt-4 overflow-hidden">
-                        <div id="dash-parking-bar" class="bg-indigo-500 h-full transition-all duration-500" style="width: 50%"></div>
-                    </div>
-                </div>
-                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 text-amber-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-circle-exclamation text-6xl"></i></div>
-                    <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Complaints</p>
-                    <h3 id="dash-complaints-count" class="text-3xl font-bold mt-2 text-white">1 Pending</h3>
-                    <div class="flex gap-4 mt-4 text-xs font-medium text-slate-400">
-                        <span><i class="fa-solid fa-circle text-amber-500 mr-1"></i> <span id="dash-pending-count">1</span> Pending</span>
-                        <span><i class="fa-solid fa-circle text-emerald-500 mr-1"></i> <span id="dash-resolved-count">2</span> Resolved</span>
-                    </div>
-                </div>
-                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 text-cyan-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-bullhorn text-6xl"></i></div>
-                    <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Notices</p>
-                    <h3 id="dash-notices-count" class="text-3xl font-bold mt-2 text-white">3 Live</h3>
-                    <p class="text-xs text-slate-400 mt-4"><i class="fa-solid fa-clock mr-1 text-cyan-500"></i> Latest: Hackathon Registrations Open</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h4 class="font-bold text-lg text-white">Parking Quick Status</h4>
-                        <button onclick="switchTab('parking')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">View Map →</button>
-                    </div>
-                    <div id="dash-parking-grid" class="grid grid-cols-4 gap-3">
-                        </div>
-                </div>
-                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <h4 class="font-bold text-lg text-white">Recent Urgent Notices</h4>
-                        <button onclick="switchTab('notices')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">Open Board →</button>
-                    </div>
-                    <div id="dash-notices-list" class="space-y-3.5">
-                        </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-parking" class="tab-content hidden space-y-6">
-            <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-                    <div>
-                        <h3 class="text-xl font-bold text-white">Main Block Smart Parking Layout</h3>
-                        <p class="text-sm text-slate-400 mt-0.5">Click any available green slot to book/reserve instantly.</p>
-                    </div>
-                    <div class="flex gap-4 text-xs font-semibold">
-                        <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-emerald-500 rounded-sm"></span> Available</span>
-                        <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-rose-500 rounded-sm"></span> Occupied / Booked</span>
-                    </div>
-                </div>
-
-                <div id="parking-slots-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
-                    </div>
-            </div>
-        </section>
-
-        <section id="tab-complaints" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-1 h-fit">
-                <h3 class="text-xl font-bold text-white mb-1">Raise a Complaint</h3>
-                <p class="text-xs text-slate-400 mb-6">File campus issues anonymously or with your ID for fast resolution.</p>
-                
-                <form id="complaint-form" onsubmit="handleComplaintSubmit(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Category</label>
-                        <select id="comp-category" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 focus:outline-none focus:border-indigo-500" required>
-                            <option value="Lab & Computers">Lab & IT Infrastructure</option>
-                            <option value="Electricity / AC">Electricity & Air Conditioning</option>
-                            <option value="Canteen Hygiene">Canteen & Cafeteria</option>
-                            <option value="Water Supply">Water Supply / Washrooms</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Room / Location</label>
-                        <input type="text" id="comp-location" placeholder="e.g., Computer Lab 3, GIDA Block" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500" required>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Issue Description</label>
-                        <textarea id="comp-desc" rows="4" placeholder="Describe the issue clearly..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none" required></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-paper-plane text-xs"></i> Submit Log
-                    </button>
-                </form>
-            </div>
-
-            <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-2 space-y-6">
+        <div>
+            <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-6 border-b border-slate-800/60">
                 <div>
-                    <h3 class="text-xl font-bold text-white">Live Status Tracker</h3>
-                    <p class="text-sm text-slate-400 mt-0.5">Track your lodged campus grievances and verification actions live.</p>
+                    <h2 id="page-title" class="text-2xl md:text-3xl font-bold text-white tracking-tight">Dashboard Overview</h2>
+                    <p id="page-desc" class="text-sm text-slate-400 mt-1">Real-time monitoring and campus management terminal.</p>
                 </div>
-                
-                <div id="complaints-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                <div class="flex items-center gap-3 bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 text-sm font-medium shadow-sm">
+                    <i class="fa-regular fa-calendar text-indigo-400"></i>
+                    <span id="live-date" class="text-slate-300">June 15, 2026</span>
+                </div>
+            </header>
+
+            <section id="tab-dashboard" class="tab-content space-y-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-6 opacity-10 text-indigo-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-square-p text-6xl"></i></div>
+                        <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Parking Availability</p>
+                        <h3 id="dash-parking-count" class="text-3xl font-bold mt-2 text-white">4 / 8 Available</h3>
+                        <div class="w-full bg-slate-800 h-2 rounded-full mt-4 overflow-hidden">
+                            <div id="dash-parking-bar" class="bg-indigo-500 h-full transition-all duration-500" style="width: 50%"></div>
+                        </div>
                     </div>
-            </div>
-        </section>
-
-        <section id="tab-notices" class="tab-content hidden space-y-6">
-            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800/80">
-                <div class="flex gap-2">
-                    <button onclick="filterNotices('all')" id="filter-all" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-indigo-600 text-white rounded-lg transition-all shadow-sm">All Announcements</button>
-                    <button onclick="filterNotices('Academic')" id="filter-Academic" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Academics</button>
-                    <button onclick="filterNotices('Events')" id="filter-Events" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Events</button>
-                    <button onclick="filterNotices('Placement')" id="filter-Placement" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Placements</button>
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-6 opacity-10 text-amber-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-circle-exclamation text-6xl"></i></div>
+                        <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Complaints</p>
+                        <h3 id="dash-complaints-count" class="text-3xl font-bold mt-2 text-white">1 Pending</h3>
+                        <div class="flex gap-4 mt-4 text-xs font-medium text-slate-400">
+                            <span><i class="fa-solid fa-circle text-amber-500 mr-1"></i> <span id="dash-pending-count">1</span> Pending</span>
+                            <span><i class="fa-solid fa-circle text-emerald-500 mr-1"></i> <span id="dash-resolved-count">2</span> Resolved</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-6 opacity-10 text-cyan-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-bullhorn text-6xl"></i></div>
+                        <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Notices</p>
+                        <h3 id="dash-notices-count" class="text-3xl font-bold mt-2 text-white">3 Live</h3>
+                        <p class="text-xs text-slate-400 mt-4"><i class="fa-solid fa-clock mr-1 text-cyan-500"></i> Latest: Hackathon Registrations Open</p>
+                    </div>
                 </div>
-                <div class="text-xs font-medium text-slate-500"><i class="fa-solid fa-circle-info text-indigo-400 mr-1.5"></i> Sorted by latest priority</div>
-            </div>
 
-            <div id="notices-board-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="font-bold text-lg text-white">Parking Quick Status</h4>
+                            <button onclick="switchTab('parking')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">View Map →</button>
+                        </div>
+                        <div id="dash-parking-grid" class="grid grid-cols-4 gap-3">
+                            </div>
+                    </div>
+                    <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="font-bold text-lg text-white">Recent Urgent Notices</h4>
+                            <button onclick="switchTab('notices')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">Open Board →</button>
+                        </div>
+                        <div id="dash-notices-list" class="space-y-3.5">
+                            </div>
+                    </div>
                 </div>
-        </section>
+            </section>
+
+            <section id="tab-parking" class="tab-content hidden space-y-6">
+                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Main Block Smart Parking Layout</h3>
+                            <p class="text-sm text-slate-400 mt-0.5">Click any available green slot to book/reserve instantly.</p>
+                        </div>
+                        <div class="flex gap-4 text-xs font-semibold">
+                            <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-emerald-500 rounded-sm"></span> Available</span>
+                            <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-rose-500 rounded-sm"></span> Occupied / Booked</span>
+                        </div>
+                    </div>
+
+                    <div id="parking-slots-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        </div>
+                </div>
+            </section>
+
+            <section id="tab-complaints" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-1 h-fit">
+                    <h3 class="text-xl font-bold text-white mb-1">Raise a Complaint</h3>
+                    <p class="text-xs text-slate-400 mb-6">File campus issues anonymously or with your ID for fast resolution.</p>
+                    
+                    <form id="complaint-form" onsubmit="handleComplaintSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Category</label>
+                            <select id="comp-category" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 focus:outline-none focus:border-indigo-500" required>
+                                <option value="Lab & Computers">Lab & IT Infrastructure</option>
+                                <option value="Electricity / AC">Electricity & Air Conditioning</option>
+                                <option value="Canteen Hygiene">Canteen & Cafeteria</option>
+                                <option value="Water Supply">Water Supply / Washrooms</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Room / Location</label>
+                            <input type="text" id="comp-location" placeholder="e.g., Computer Lab 3, GIDA Block" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Issue Description</label>
+                            <textarea id="comp-desc" rows="4" placeholder="Describe the issue clearly..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-xs"></i> Submit Log
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-2 space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Live Status Tracker</h3>
+                        <p class="text-sm text-slate-400 mt-0.5">Track your lodged campus grievances and verification actions live.</p>
+                    </div>
+                    
+                    <div id="complaints-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        </div>
+                </div>
+            </section>
+
+            <section id="tab-notices" class="tab-content hidden space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                    <div class="flex gap-2">
+                        <button onclick="filterNotices('all')" id="filter-all" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-indigo-600 text-white rounded-lg transition-all shadow-sm">All Announcements</button>
+                        <button onclick="filterNotices('Academic')" id="filter-Academic" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Academics</button>
+                        <button onclick="filterNotices('Events')" id="filter-Events" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Events</button>
+                        <button onclick="filterNotices('Placement')" id="filter-Placement" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Placements</button>
+                    </div>
+                    <div class="text-xs font-medium text-slate-500"><i class="fa-solid fa-circle-info text-indigo-400 mr-1.5"></i> Sorted by latest priority</div>
+                </div>
+
+                <div id="notices-board-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+            </section>
+        </div>
+
+        <footer class="mt-12 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
+            <div>
+                <p>© 2026 CampusPulse. All rights reserved.</p>
+            </div>
+            <div class="flex items-center gap-2 bg-slate-950/60 border border-slate-800/60 px-3 py-1.5 rounded-lg">
+                <span>Designed & Engineered with ❤️ by</span>
+                <span class="text-indigo-400 font-semibold">Divyanshu Singh</span>
+            </div>
+        </footer>
 
     </main>
 
     <script>
-        // --- DATA MANAGEMENT STATE (Using LocalStorage to support dynamic reload actions) ---
+        // --- DATA MANAGEMENT STATE ---
         let parkingSlots = JSON.parse(localStorage.getItem('campus_parking')) || [
             { id: 'P-101', type: 'Car', occupied: true, occupant: 'Faculty (Dean)' },
             { id: 'P-102', type: 'Car', occupied: false, occupant: '' },
             { id: 'P-103', type: 'Car', occupied: true, occupant: 'Visitor MH-04' },
             { id: 'P-104', type: 'Car', occupied: false, occupant: '' },
             { id: 'P-105', type: 'Bike', occupied: false, occupant: '' },
-            { id: 'P-106', type: 'Bike', occupied: true, occupant: 'Student UP-53' },
+            { id: 'P-106', type: 'Bike', occupied: true, occupant: 'Student' },
             { id: 'P-107', type: 'Bike', occupied: false, occupant: '' },
             { id: 'P-108', type: 'Bike', occupied: true, occupant: 'Faculty' },
         ];
@@ -216,19 +235,14 @@
 
         // --- NAVIGATION CONTROLLER ---
         function switchTab(tabId) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-            // Remove active button styling
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200";
             });
 
-            // Show active tab
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            // Add active styling to tab button
             document.getElementById(`btn-${tabId}`).className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/10";
 
-            // Header Content Alterations
             const titleMap = {
                 'dashboard': ['Dashboard Overview', 'Real-time monitoring and campus management terminal.'],
                 'parking': ['Smart Parking Log', 'Live occupancy metrics of smart infrastructure bays.'],
@@ -254,7 +268,6 @@
 
             document.getElementById('dash-notices-count').innerText = `${notices.length} Live`;
 
-            // Inject Quick Overviews
             let quickGridHtml = '';
             parkingSlots.slice(0, 4).forEach(s => {
                 quickGridHtml += `
@@ -315,10 +328,8 @@
             parkingSlots = parkingSlots.map(slot => {
                 if(slot.id === slotId) {
                     if(slot.occupied) {
-                        // Freeing slot
                         return { ...slot, occupied: false, occupant: '' };
                     } else {
-                        // Booking slot
                         return { ...slot, occupied: true, occupant: 'Self (Student Active Booking)' };
                     }
                 }
@@ -329,7 +340,7 @@
             updateDashboardMetrics();
         }
 
-        // --- FEATURE 2: COMPLAINT CONTROLLER MODAL ACTIONS ---
+        // --- FEATURE 2: COMPLAINT CONTROLLER ---
         function renderComplaints() {
             const list = document.getElementById('complaints-list');
             list.innerHTML = '';
@@ -380,7 +391,6 @@
             renderComplaints();
             updateDashboardMetrics();
             
-            // Reset Form Values safely
             document.getElementById('comp-location').value = '';
             document.getElementById('comp-desc').value = '';
         }
@@ -392,7 +402,7 @@
             updateDashboardMetrics();
         }
 
-        // --- FEATURE 3: DIGITAL PINBOARD NOTICE BOARD CONTROLLER ---
+        // --- FEATURE 3: NOTICE BOARD CONTROLLER ---
         function renderNotices(filter) {
             const grid = document.getElementById('notices-board-grid');
             grid.innerHTML = '';
