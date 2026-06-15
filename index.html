@@ -7,179 +7,223 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col md:flex-row">
+<body class="bg-[#0b0f19] text-slate-100 min-h-screen flex flex-col md:flex-row antialiased">
 
-    <aside class="w-full md:w-64 bg-slate-950 border-r border-slate-800 p-6 flex flex-col justify-between">
+    <div id="sos-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-rose-500/40 p-8 rounded-3xl max-w-md w-full text-center shadow-2xl shadow-rose-950/50 animate-bounce">
+            <div class="w-20 h-20 bg-rose-500/10 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-rose-500/20 text-3xl animate-pulse">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 class="text-2xl font-black text-white tracking-tight">CAMPUS EMERGENCY ALERT</h3>
+            <p class="text-slate-400 text-sm mt-3 leading-relaxed">Smart lockdown protocols and emergency response units have been dispatched to <span class="text-rose-400 font-bold">GIDA Block Main Arena</span>.</p>
+            <button onclick="toggleSOS(false)" class="mt-8 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-xl transition-all cursor-pointer">Deactivate Alert</button>
+        </div>
+    </div>
+
+    <aside class="w-full md:w-64 bg-[#070a13] border-r border-slate-800/80 p-6 flex flex-col justify-between shrink-0">
         <div>
-            <div class="flex items-center gap-3 mb-10">
-                <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
-                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+            <div class="flex items-center gap-3 mb-8">
+                <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-shield-halved text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">CampusPulse</h1>
-                    <p class="text-xs text-slate-500 font-medium tracking-wide">SMART SOLUTIONS</p>
+                    <h1 class="text-xl font-black tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">CampusPulse</h1>
+                    <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">KIPM Prototype</p>
                 </div>
             </div>
             
-            <nav class="space-y-2">
-                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/10">
-                    <i class="fa-solid fa-chart-pie text-base"></i> Dashboard Overview
+            <nav class="space-y-1.5">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-chart-pie text-base"></i> Dashboard</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] opacity-50"></i>
                 </button>
-                <button onclick="switchTab('parking')" id="btn-parking" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200">
-                    <i class="fa-solid fa-square-p text-base"></i> Smart Parking
+                <button onclick="switchTab('parking')" id="btn-parking" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-400 hover:bg-slate-900 hover:text-slate-200">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-square-p text-base"></i> Smart Parking</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] opacity-0"></i>
                 </button>
-                <button onclick="switchTab('complaints')" id="btn-complaints" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200">
-                    <i class="fa-solid fa-circle-exclamation text-base"></i> Complaint System
+                <button onclick="switchTab('complaints')" id="btn-complaints" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-400 hover:bg-slate-900 hover:text-slate-200">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-circle-exclamation text-base"></i> Complaint Hub</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] opacity-0"></i>
                 </button>
-                <button onclick="switchTab('notices')" id="btn-notices" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200">
-                    <i class="fa-solid fa-bullhorn text-base"></i> Smart Notice Board
+                <button onclick="switchTab('notices')" id="btn-notices" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-400 hover:bg-slate-900 hover:text-slate-200">
+                    <span class="flex items-center gap-3"><i class="fa-solid fa-bullhorn text-base"></i> Notice Board</span>
+                    <i class="fa-solid fa-chevron-right text-[10px] opacity-0"></i>
                 </button>
             </nav>
+
+            <div class="mt-8">
+                <button onclick="toggleSOS(true)" class="w-full bg-rose-950/30 hover:bg-rose-900/40 text-rose-400 border border-rose-500/30 font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-rose-950/20">
+                    <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> Trigger SOS Panic
+                </button>
+            </div>
         </div>
         
-        <div class="mt-auto pt-6 border-t border-slate-800/60">
-            <div class="bg-slate-900/50 border border-slate-800 p-3 rounded-xl">
-                <p class="text-[10px] uppercase font-bold tracking-wider text-slate-500">Developed By</p>
-                <p class="text-sm font-semibold text-slate-200 mt-0.5"><i class="fa-solid fa-code text-xs text-indigo-400 mr-1.5"></i> Divyanshu Singh</p>
-            </div>
-            <div class="pt-4 text-xs text-slate-500 font-medium">
-                <p><i class="fa-solid fa-circle text-emerald-500 text-[10px] mr-1.5 animate-pulse"></i> Systems Operational</p>
+        <div class="pt-6 border-t border-slate-900">
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-900">
+                <p class="text-[9px] uppercase font-bold tracking-widest text-slate-500">Lead Engineer</p>
+                <p class="text-sm font-bold text-slate-200 mt-0.5"><i class="fa-solid fa-shield-heart text-xs text-indigo-400 mr-1.5"></i> Divyanshu Singh</p>
             </div>
         </div>
     </aside>
 
     <main class="flex-1 p-6 md:p-10 overflow-y-auto max-w-7xl mx-auto w-full flex flex-col justify-between">
-        
         <div>
-            <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-6 border-b border-slate-800/60">
+            <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10 pb-6 border-b border-slate-900">
                 <div>
-                    <h2 id="page-title" class="text-2xl md:text-3xl font-bold text-white tracking-tight">Dashboard Overview</h2>
-                    <p id="page-desc" class="text-sm text-slate-400 mt-1">Real-time monitoring and campus management terminal.</p>
+                    <h2 id="page-title" class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Dashboard Overview</h2>
+                    <p id="page-desc" class="text-sm text-slate-400 mt-1">Real-time automation matrix for KIPM terminal networks.</p>
                 </div>
-                <div class="flex items-center gap-3 bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 text-sm font-medium shadow-sm">
-                    <i class="fa-regular fa-calendar text-indigo-400"></i>
-                    <span id="live-date" class="text-slate-300">June 15, 2026</span>
+                <div class="flex items-center gap-3 bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-900 text-xs font-semibold shadow-inner">
+                    <i class="fa-regular fa-calendar text-indigo-400 text-sm"></i>
+                    <span id="live-date" class="text-slate-300 tracking-wide">June 15, 2026</span>
                 </div>
             </header>
 
             <section id="tab-dashboard" class="tab-content space-y-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-6 opacity-10 text-indigo-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-square-p text-6xl"></i></div>
-                        <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Parking Availability</p>
-                        <h3 id="dash-parking-count" class="text-3xl font-bold mt-2 text-white">4 / 8 Available</h3>
-                        <div class="w-full bg-slate-800 h-2 rounded-full mt-4 overflow-hidden">
-                            <div id="dash-parking-bar" class="bg-indigo-500 h-full transition-all duration-500" style="width: 50%"></div>
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-900 relative overflow-hidden group">
+                        <p class="text-xs font-bold text-slate-500 tracking-widest uppercase">Smart Parking Status</p>
+                        <h3 id="dash-parking-count" class="text-3xl font-black mt-2 text-white">4 / 8 Open</h3>
+                        <div class="w-full bg-slate-900 h-2 rounded-full mt-5 overflow-hidden border border-slate-800">
+                            <div id="dash-parking-bar" class="bg-gradient-to-r from-indigo-500 to-cyan-400 h-full transition-all duration-500" style="width: 50%"></div>
                         </div>
                     </div>
-                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-6 opacity-10 text-amber-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-circle-exclamation text-6xl"></i></div>
-                        <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Complaints</p>
-                        <h3 id="dash-complaints-count" class="text-3xl font-bold mt-2 text-white">1 Pending</h3>
-                        <div class="flex gap-4 mt-4 text-xs font-medium text-slate-400">
-                            <span><i class="fa-solid fa-circle text-amber-500 mr-1"></i> <span id="dash-pending-count">1</span> Pending</span>
-                            <span><i class="fa-solid fa-circle text-emerald-500 mr-1"></i> <span id="dash-resolved-count">2</span> Resolved</span>
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-900 relative overflow-hidden group">
+                        <p class="text-xs font-bold text-slate-500 tracking-widest uppercase">Grievance Backlog</p>
+                        <h3 id="dash-complaints-count" class="text-3xl font-black mt-2 text-white">1 Active</h3>
+                        <div class="flex gap-4 mt-5 text-xs font-semibold text-slate-400">
+                            <span><i class="fa-solid fa-circle text-amber-500 text-[10px] mr-1.5"></i><span id="dash-pending-count">1</span> Pending</span>
+                            <span><i class="fa-solid fa-circle text-emerald-500 text-[10px] mr-1.5"></i><span id="dash-resolved-count">2</span> Resolved</span>
                         </div>
                     </div>
-                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800/80 relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-6 opacity-10 text-cyan-500 group-hover:scale-110 transition-transform"><i class="fa-solid fa-bullhorn text-6xl"></i></div>
-                        <p class="text-xs font-semibold text-slate-500 tracking-wider uppercase">Active Notices</p>
-                        <h3 id="dash-notices-count" class="text-3xl font-bold mt-2 text-white">3 Live</h3>
-                        <p class="text-xs text-slate-400 mt-4"><i class="fa-solid fa-clock mr-1 text-cyan-500"></i> Latest: Hackathon Registrations Open</p>
+                    <div class="bg-slate-950 p-6 rounded-2xl border border-slate-900 relative overflow-hidden group">
+                        <p class="text-xs font-bold text-slate-500 tracking-widest uppercase">Digital Pin Notices</p>
+                        <h3 id="dash-notices-count" class="text-3xl font-black mt-2 text-white">4 Broadcasts</h3>
+                        <p class="text-xs text-slate-400 mt-5 truncate font-medium"><i class="fa-solid fa-bullhorn text-cyan-400 mr-1.5 animate-pulse"></i> Live Events Randomizer Open</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="bg-slate-950 rounded-2xl border border-slate-900 p-6 lg:col-span-2">
                         <div class="flex items-center justify-between mb-6">
-                            <h4 class="font-bold text-lg text-white">Parking Quick Status</h4>
-                            <button onclick="switchTab('parking')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">View Map →</button>
+                            <h4 class="font-bold text-base text-white tracking-tight"><i class="fa-solid fa-square-p text-indigo-400 mr-2"></i>Parking Quick Layout</h4>
+                            <button onclick="switchTab('parking')" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 cursor-pointer">Open Full Grid →</button>
                         </div>
-                        <div id="dash-parking-grid" class="grid grid-cols-4 gap-3">
+                        <div id="dash-parking-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                             </div>
                     </div>
-                    <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h4 class="font-bold text-lg text-white">Recent Urgent Notices</h4>
-                            <button onclick="switchTab('notices')" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300">Open Board →</button>
-                        </div>
-                        <div id="dash-notices-list" class="space-y-3.5">
+                    
+                    <div class="bg-slate-950 rounded-2xl border border-slate-900 p-6 lg:col-span-1 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-base text-white tracking-tight mb-4"><i class="fa-solid fa-microchip text-purple-400 mr-2"></i>Network Efficiency</h4>
+                            <div class="space-y-3.5">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-slate-400 font-medium">IoT Sensor Response</span>
+                                    <span class="text-emerald-400 font-bold">99.8% (Optimal)</span>
+                                    </div>
+                                <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-emerald-500 h-full" style="width: 99.8%"></div>
+                                </div>
+                                <div class="flex items-center justify-between text-xs pt-1">
+                                    <span class="text-slate-400 font-medium">Database Node Latency</span>
+                                    <span class="text-indigo-400 font-bold">12ms (Cached)</span>
+                                </div>
+                                <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                                    <div class="bg-indigo-500 h-full" style="width: 85%"></div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="bg-[#0f1424] p-3 rounded-xl border border-slate-800/60 mt-6 flex items-center gap-3">
+                            <i class="fa-solid fa-server text-indigo-400 text-lg"></i>
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Gateway Terminal</p>
+                                <p class="text-xs font-bold text-slate-300">GIDA Block Node Active</p>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="bg-slate-950 rounded-2xl border border-slate-900 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-base text-white tracking-tight"><i class="fa-solid fa-bolt text-amber-400 mr-2"></i>Priority Communications</h4>
+                        <button onclick="switchTab('notices')" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 cursor-pointer">Open Pinboard →</button>
+                    </div>
+                    <div id="dash-notices-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        </div>
                 </div>
             </section>
 
             <section id="tab-parking" class="tab-content hidden space-y-6">
-                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6">
+                <div class="bg-slate-950 rounded-2xl border border-slate-900 p-6">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                         <div>
-                            <h3 class="text-xl font-bold text-white">Main Block Smart Parking Layout</h3>
-                            <p class="text-sm text-slate-400 mt-0.5">Click any available green slot to book/reserve instantly.</p>
+                            <h3 class="text-lg font-bold text-white tracking-tight">Main Security Parking Matrix</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">Click on responsive open tags to reserve bays.</p>
                         </div>
-                        <div class="flex gap-4 text-xs font-semibold">
-                            <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-emerald-500 rounded-sm"></span> Available</span>
-                            <span class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800"><span class="w-3 h-3 bg-rose-500 rounded-sm"></span> Occupied / Booked</span>
+                        <div class="flex gap-4 text-[11px] font-bold">
+                            <span class="flex items-center gap-2 bg-[#091414] px-3 py-1.5 rounded-lg border border-emerald-950 text-emerald-400"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> Open Bay</span>
+                            <span class="flex items-center gap-2 bg-[#190b10] px-3 py-1.5 rounded-lg border border-rose-950 text-rose-400"><span class="w-2 h-2 bg-rose-500 rounded-full"></span> Booked Terminal</span>
                         </div>
                     </div>
 
-                    <div id="parking-slots-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div id="parking-slots-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         </div>
                 </div>
             </section>
 
             <section id="tab-complaints" class="tab-content hidden grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-1 h-fit">
-                    <h3 class="text-xl font-bold text-white mb-1">Raise a Complaint</h3>
-                    <p class="text-xs text-slate-400 mb-6">File campus issues anonymously or with your ID for fast resolution.</p>
+                <div class="bg-slate-950 rounded-2xl border border-slate-900 p-6 lg:col-span-1 h-fit">
+                    <h3 class="text-lg font-bold text-white tracking-tight">Lodge Structural Grievance</h3>
+                    <p class="text-xs text-slate-400 mt-0.5 mb-6">Logs are tracked immediately by automated cell networks.</p>
                     
-                    <form id="complaint-form" onsubmit="handleComplaintSubmit(event)" class="space-y-4">
+                    <form id="complaint-form" onsubmit="handleComplaintSubmit(event)" class="space-y-4.5">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Category</label>
-                            <select id="comp-category" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 focus:outline-none focus:border-indigo-500" required>
+                            <label class="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Classification Group</label>
+                            <select id="comp-category" class="w-full bg-[#070a13] border border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-200 focus:outline-none focus:border-indigo-500" required>
                                 <option value="Lab & Computers">Lab & IT Infrastructure</option>
                                 <option value="Electricity / AC">Electricity & Air Conditioning</option>
                                 <option value="Canteen Hygiene">Canteen & Cafeteria</option>
-                                <option value="Water Supply">Water Supply / Washrooms</option>
+                                <option value="Water Supply">Water Supply Logistics</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Room / Location</label>
-                            <input type="text" id="comp-location" placeholder="e.g., Computer Lab 3, GIDA Block" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500" required>
+                            <label class="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Exact Terminal Location</label>
+                            <input type="text" id="comp-location" placeholder="e.g., Block B, Computer Lab 3" class="w-full bg-[#070a13] border border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-200 placeholder-slate-700 focus:outline-none focus:border-indigo-500" required>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Issue Description</label>
-                            <textarea id="comp-desc" rows="4" placeholder="Describe the issue clearly..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 resize-none" required></textarea>
+                            <label class="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Detailed Matrix Logs</label>
+                            <textarea id="comp-desc" rows="4" placeholder="Describe the fault clearly..." class="w-full bg-[#070a13] border border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-200 placeholder-slate-700 focus:outline-none focus:border-indigo-500 resize-none text-slate-200" required></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-paper-plane text-xs"></i> Submit Log
+                        <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl transition-all shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-server text-xs"></i> Submit Log Record
                         </button>
                     </form>
                 </div>
 
-                <div class="bg-slate-950 rounded-2xl border border-slate-800/80 p-6 lg:col-span-2 space-y-6">
+                <div class="bg-slate-950 rounded-2xl border border-slate-900 p-6 lg:col-span-2 space-y-6">
                     <div>
-                        <h3 class="text-xl font-bold text-white">Live Status Tracker</h3>
-                        <p class="text-sm text-slate-400 mt-0.5">Track your lodged campus grievances and verification actions live.</p>
+                        <h3 class="text-lg font-bold text-white tracking-tight">Active Automation Stream</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Real-time status tracking of structural logs.</p>
                     </div>
                     
-                    <div id="complaints-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                    <div id="complaints-list" class="space-y-4 max-h-[520px] overflow-y-auto pr-1">
                         </div>
                 </div>
             </section>
 
             <section id="tab-notices" class="tab-content hidden space-y-6">
-                <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800/80">
-                    <div class="flex gap-2">
-                        <button onclick="filterNotices('all')" id="filter-all" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-indigo-600 text-white rounded-lg transition-all shadow-sm">All Announcements</button>
-                        <button onclick="filterNotices('Academic')" id="filter-Academic" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Academics</button>
-                        <button onclick="filterNotices('Events')" id="filter-Events" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Events</button>
-                        <button onclick="filterNotices('Placement')" id="filter-Placement" class="notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all">Placements</button>
+                <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-950 p-3.5 rounded-xl border border-slate-900">
+                    <div class="flex gap-1.5">
+                        <button onclick="filterNotices('all')" id="filter-all" class="notice-filter-btn px-4 py-2 text-xs font-bold bg-indigo-600 text-white rounded-lg transition-all cursor-pointer shadow-md">All Nodes</button>
+                        <button onclick="filterNotices('Academic')" id="filter-Academic" class="notice-filter-btn px-4 py-2 text-xs font-bold bg-[#070a13] text-slate-400 hover:text-slate-200 rounded-lg transition-all cursor-pointer">Academics</button>
+                        <button onclick="filterNotices('Events')" id="filter-Events" class="notice-filter-btn px-4 py-2 text-xs font-bold bg-[#070a13] text-slate-400 hover:text-slate-200 rounded-lg transition-all cursor-pointer">Events</button>
+                        <button onclick="filterNotices('Placement')" id="filter-Placement" class="notice-filter-btn px-4 py-2 text-xs font-bold bg-[#070a13] text-slate-400 hover:text-slate-200 rounded-lg transition-all cursor-pointer">Placements</button>
                     </div>
-                    <div class="text-xs font-medium text-slate-500"><i class="fa-solid fa-circle-info text-indigo-400 mr-1.5"></i> Sorted by latest priority</div>
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500"><i class="fa-solid fa-network-wired text-indigo-400 mr-1.5"></i> Stream Live</div>
                 </div>
 
                 <div id="notices-board-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -187,45 +231,42 @@
             </section>
         </div>
 
-        <footer class="mt-12 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
-            <div>
-                <p>© 2026 CampusPulse. All rights reserved.</p>
-            </div>
-            <div class="flex items-center gap-2 bg-slate-950/60 border border-slate-800/60 px-3 py-1.5 rounded-lg">
-                <span>Designed & Engineered with ❤️ by</span>
-                <span class="text-indigo-400 font-semibold">Divyanshu Singh</span>
+        <footer class="mt-16 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
+            <p>© 2026 CampusPulse Architecture Terminal. All rights reserved.</p>
+            <div class="flex items-center gap-2 bg-slate-950 border border-slate-900 px-3 py-1.5 rounded-xl shadow-inner">
+                <span class="text-slate-500 text-[11px]">System Designed & Built by</span>
+                <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent font-extrabold tracking-wide">Divyanshu Singh</span>
             </div>
         </footer>
 
     </main>
 
     <script>
-        // --- DATA MANAGEMENT STATE ---
+        // Data States Using LocalStorage Key Matrices
         let parkingSlots = JSON.parse(localStorage.getItem('campus_parking')) || [
-            { id: 'P-101', type: 'Car', occupied: true, occupant: 'Faculty (Dean)' },
+            { id: 'P-101', type: 'Car', occupied: true, occupant: 'Faculty Dean (Block A)' },
             { id: 'P-102', type: 'Car', occupied: false, occupant: '' },
-            { id: 'P-103', type: 'Car', occupied: true, occupant: 'Visitor MH-04' },
+            { id: 'P-103', type: 'Car', occupied: true, occupant: 'Visitor UP-53' },
             { id: 'P-104', type: 'Car', occupied: false, occupant: '' },
             { id: 'P-105', type: 'Bike', occupied: false, occupant: '' },
-            { id: 'P-106', type: 'Bike', occupied: true, occupant: 'Student' },
+            { id: 'P-106', type: 'Bike', occupied: true, occupant: 'Student CSE-A' },
             { id: 'P-107', type: 'Bike', occupied: false, occupant: '' },
-            { id: 'P-108', type: 'Bike', occupied: true, occupant: 'Faculty' },
+            { id: 'P-108', type: 'Bike', occupied: true, occupant: 'Admin Operations' },
         ];
 
         let complaints = JSON.parse(localStorage.getItem('campus_complaints')) || [
-            { id: 'CMP-8942', category: 'Electricity / AC', location: 'Audi Room 2', desc: 'Central AC system making excessive grinding sound and vibration.', status: 'Pending', date: 'Just Now' },
-            { id: 'CMP-7641', category: 'Lab & Computers', location: 'Lab 5, 2nd Floor', desc: 'System No 14 and 18 experiencing continuous boot loops during compiler executions.', status: 'Resolved', date: '3 Hours Ago' },
-            { id: 'CMP-4512', category: 'Canteen Hygiene', location: 'Main Canteen Area', desc: 'Water cooler purification filter alert light flashing red.', status: 'Resolved', date: '1 Day Ago' }
+            { id: 'LOG-8942', category: 'Electricity / AC', location: 'Audi Room 2', desc: 'Central AC system making excessive grinding sound and vibration.', status: 'Pending', date: 'Just Now' },
+            { id: 'LOG-7641', category: 'Lab & Computers', location: 'Lab 5, 2nd Floor', desc: 'System No 14 and 18 experiencing continuous boot loops during compiler executions.', status: 'Resolved', date: '3 Hours Ago' },
+            { id: 'LOG-4512', category: 'Canteen Hygiene', location: 'Main Canteen Area', desc: 'Water cooler purification filter alert light flashing red.', status: 'Resolved', date: '1 Day Ago' }
         ];
 
         const notices = [
-            { id: 1, type: 'Events', label: 'Evolvera Club', title: 'The Ignitia Nexus Randomizer', content: 'The live interactive programming and design challenge event is operational. Build prototypes for selected tracks immediately.', time: 'Just Now', tagColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20', isUrgent: true },
-            { id: 2, type: 'Academic', label: 'Examination Cell', title: 'B.Tech Even Sem Sessionals Schedule', content: 'Detailed timetable files for the second semester sessional internal tests are published on the structural college ERP. Check slots.', time: '2 Hours Ago', tagColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20', isUrgent: false },
-            { id: 3, type: 'Placement', label: 'T&P Cell', title: 'Google Cloud Program Onboarding', content: 'Registered members check Arcade program portals. Lab access keys are being dispatched to formal student email addresses.', time: '1 Day Ago', tagColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20', isUrgent: false },
-            { id: 4, type: 'Events', label: 'Hack2Skill Council', title: 'Hackathon Internal Screening Team selection', content: 'Teams shortlisted for final submission validation must assemble at KIPM Innovators Foundation Room at 2:00 PM sharply.', time: '1 Day Ago', tagColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', isUrgent: true }
+            { id: 1, type: 'Events', label: 'Evolvera Club Cell', title: 'The Ignitia Nexus Randomizer Operational', content: 'Live interactive infrastructure application challenge is currently operational. Submit dynamic frontend terminals.', time: 'Just Now', tagColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20', isUrgent: true },
+            { id: 2, type: 'Academic', label: 'Examination Cell', title: 'B.Tech Even Sem Sessionals Framework Schedule', content: 'Internal test matrices schedules for 2nd Sem CSE modules are live on academic ERP systems.', time: '2 Hours Ago', tagColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20', isUrgent: false },
+            { id: 3, type: 'Placement', label: 'T&P Corporate Cell', title: 'Google Cloud Program Onboarding Protocols', content: 'Shortlisted participants must check formal communication inboxes for cloud arcade access credentials.', time: '1 Day Ago', tagColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20', isUrgent: false },
+            { id: 4, type: 'Events', label: 'Hack2Skill Council', title: 'Hackathon Internal Screening Phase', content: 'shortlisted engineering teams assembly required at KIPM Innovators Foundation Lab for document vetting.', time: '1 Day Ago', tagColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', isUrgent: true }
         ];
 
-        // --- APPARATUS INITIALIZATION SETUP ---
         window.onload = function() {
             renderParking();
             renderComplaints();
@@ -233,31 +274,34 @@
             updateDashboardMetrics();
         };
 
-        // --- NAVIGATION CONTROLLER ---
+        // Tab Screen Matrix Interferences
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 text-slate-400 hover:bg-slate-800/50 hover:text-slate-200";
+                btn.className = "nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 text-slate-400 hover:bg-slate-900 hover:text-slate-200";
+                btn.querySelector('.fa-chevron-right').classList.add('opacity-0');
             });
 
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.getElementById(`btn-${tabId}`).className = "nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/10";
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.className = "nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 bg-indigo-600/10 border border-indigo-500/20 text-indigo-400";
+            activeBtn.querySelector('.fa-chevron-right').classList.remove('opacity-0');
 
             const titleMap = {
-                'dashboard': ['Dashboard Overview', 'Real-time monitoring and campus management terminal.'],
-                'parking': ['Smart Parking Log', 'Live occupancy metrics of smart infrastructure bays.'],
-                'complaints': ['Grievance Redressal System', 'Lodge campus reports and check ongoing verification states.'],
-                'notices': ['Smart Digital Notice Board', 'Categorized announcements terminal for immediate broadcast.']
+                'dashboard': ['Dashboard Overview', 'Real-time automation matrix for KIPM terminal networks.'],
+                'parking': ['Smart Parking Matrix', 'IoT node occupancy logs across dynamic multi-vehicle bays.'],
+                'complaints': ['Grievance Redressal Stream', 'Lodge system architecture exceptions and track diagnostics status.'],
+                'notices': ['Smart Notice Pinboard', 'Categorized communication channels for active terminal broadcasts.']
             };
             document.getElementById('page-title').innerText = titleMap[tabId][0];
             document.getElementById('page-desc').innerText = titleMap[tabId][1];
         }
 
-        // --- DASHBOARD COUNTS TRACKER UTILITY ---
+        // Dashboard Computational Metrics
         function updateDashboardMetrics() {
             const totalSlots = parkingSlots.length;
             const availableSlots = parkingSlots.filter(s => !s.occupied).length;
-            document.getElementById('dash-parking-count').innerText = `${availableSlots} / ${totalSlots} Available`;
+            document.getElementById('dash-parking-count').innerText = `${availableSlots} / ${totalSlots} Open`;
             document.getElementById('dash-parking-bar').style.width = `${(availableSlots/totalSlots)*100}%`;
 
             const pendingComp = complaints.filter(c => c.status === 'Pending').length;
@@ -265,15 +309,14 @@
             document.getElementById('dash-complaints-count').innerText = `${pendingComp} Active`;
             document.getElementById('dash-pending-count').innerText = pendingComp;
             document.getElementById('dash-resolved-count').innerText = resolvedComp;
-
-            document.getElementById('dash-notices-count').innerText = `${notices.length} Live`;
+            document.getElementById('dash-notices-count').innerText = `${notices.length} Logs`;
 
             let quickGridHtml = '';
             parkingSlots.slice(0, 4).forEach(s => {
                 quickGridHtml += `
-                    <div class="p-3 text-center rounded-xl border text-xs font-semibold ${s.occupied ? 'bg-rose-500/10 border-rose-500/20 text-rose-400' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'}">
-                        <div>${s.id}</div>
-                        <div class="text-[10px] opacity-60 mt-0.5">${s.occupied ? 'Full' : 'Open'}</div>
+                    <div class="p-3 rounded-xl border text-center transition-all ${s.occupied ? 'bg-rose-500/5 border-rose-500/10 text-rose-400' : 'bg-emerald-500/5 border-emerald-500/10 text-emerald-400'}">
+                        <div class="font-bold text-xs tracking-wide">${s.id}</div>
+                        <div class="text-[9px] uppercase tracking-wider font-extrabold opacity-60 mt-1">${s.occupied ? 'Full' : 'Open'}</div>
                     </div>`;
             });
             document.getElementById('dash-parking-grid').innerHTML = quickGridHtml;
@@ -281,18 +324,28 @@
             let quickNoticeHtml = '';
             notices.slice(0, 2).forEach(n => {
                 quickNoticeHtml += `
-                    <div class="flex items-start gap-3 p-3 bg-slate-900/50 rounded-xl border border-slate-800/60 text-xs">
-                        <span class="w-2 h-2 mt-1.5 rounded-full ${n.isUrgent ? 'bg-rose-500 animate-pulse' : 'bg-indigo-500'}"></span>
+                    <div class="bg-slate-900/30 border border-slate-900 p-4 rounded-xl flex items-start gap-3.5 text-xs">
+                        <div class="w-2 h-2 rounded-full mt-1.5 shrink-0 ${n.isUrgent ? 'bg-rose-500 animate-ping' : 'bg-indigo-500'}"></div>
                         <div>
                             <h5 class="font-bold text-slate-200 line-clamp-1">${n.title}</h5>
-                            <p class="text-slate-500 mt-0.5">${n.label} • ${n.time}</p>
+                            <p class="text-slate-500 mt-1 font-medium">${n.label} • ${n.time}</p>
                         </div>
                     </div>`;
             });
             document.getElementById('dash-notices-list').innerHTML = quickNoticeHtml;
         }
 
-        // --- FEATURE 1: INTERACTIVE PARKING CONTROLLER ---
+        // SOS Modal Toggle Logic
+        function toggleSOS(show) {
+            const modal = document.getElementById('sos-modal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        // Dynamic Interactive Parking Controllers
         function renderParking() {
             const container = document.getElementById('parking-slots-container');
             container.innerHTML = '';
@@ -302,24 +355,23 @@
                 card.onclick = () => toggleParkingSlot(slot.id);
                 card.className = `p-5 rounded-2xl border text-left cursor-pointer transition-all duration-300 group select-none relative overflow-hidden ${
                     slot.occupied 
-                    ? 'bg-rose-950/20 border-rose-800/40 hover:border-rose-700/60' 
-                    : 'bg-emerald-950/10 border-emerald-800/40 hover:border-emerald-700/60 hover:bg-emerald-950/20 shadow-md hover:shadow-emerald-950/20'
+                    ? 'bg-rose-950/10 border-rose-900/30 hover:border-rose-700/50' 
+                    : 'bg-emerald-950/5 border-emerald-900/20 hover:border-emerald-700/40 hover:bg-emerald-950/10'
                 }`;
 
                 card.innerHTML = `
                     <div class="flex items-center justify-between">
-                        <span class="text-sm font-bold tracking-wide text-slate-400">${slot.id}</span>
-                        <i class="fa-solid ${slot.type === 'Car' ? 'fa-car' : 'fa-motorcycle'} text-lg ${slot.occupied ? 'text-rose-400' : 'text-emerald-400 group-hover:scale-110 transition-transform'}"></i>
+                        <span class="text-xs font-bold tracking-wider text-slate-400">${slot.id}</span>
+                        <i class="fa-solid ${slot.type === 'Car' ? 'fa-car' : 'fa-motorcycle'} text-base ${slot.occupied ? 'text-rose-400' : 'text-emerald-400 group-hover:scale-110 transition-transform'}"></i>
                     </div>
                     <div class="mt-6">
-                        <div class="text-base font-bold ${slot.occupied ? 'text-rose-200' : 'text-emerald-200'}">
-                            ${slot.occupied ? 'Occupied / Reserve' : 'Available'}
+                        <div class="text-base font-extrabold ${slot.occupied ? 'text-rose-300' : 'text-emerald-300'}">
+                            ${slot.occupied ? 'Occupied / Full' : 'Available'}
                         </div>
-                        <div class="text-xs text-slate-500 font-medium mt-1 truncate">
-                            ${slot.occupied ? `<i class="fa-regular fa-user text-[10px] mr-1"></i> ${slot.occupant}` : 'Click to book slot'}
-                        </div>
-                    </div>
-                `;
+                        <p class="text-xs text-slate-500 font-medium mt-1 truncate">
+                            ${slot.occupied ? `<i class="fa-regular fa-user text-[10px] mr-1.5"></i>${slot.occupant}` : 'Click to allocate bay'}
+                        </p>
+                    </div>`;
                 container.appendChild(card);
             });
         }
@@ -327,11 +379,7 @@
         function toggleParkingSlot(slotId) {
             parkingSlots = parkingSlots.map(slot => {
                 if(slot.id === slotId) {
-                    if(slot.occupied) {
-                        return { ...slot, occupied: false, occupant: '' };
-                    } else {
-                        return { ...slot, occupied: true, occupant: 'Self (Student Active Booking)' };
-                    }
+                    return slot.occupied ? { ...slot, occupied: false, occupant: '' } : { ...slot, occupied: true, occupant: 'Self (Active User App Session)' };
                 }
                 return slot;
             });
@@ -340,39 +388,34 @@
             updateDashboardMetrics();
         }
 
-        // --- FEATURE 2: COMPLAINT CONTROLLER ---
+        // Grievance Pipeline Automation Engine
         function renderComplaints() {
             const list = document.getElementById('complaints-list');
             list.innerHTML = '';
             
             complaints.forEach(c => {
                 const item = document.createElement('div');
-                item.className = "p-5 bg-slate-900/60 border border-slate-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:bg-slate-900/90";
+                item.className = "p-5 bg-slate-950 border border-slate-900 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:border-slate-800";
                 
                 item.innerHTML = `
                     <div class="space-y-2">
-                        <div class="flex items-center flex-wrap gap-2">
-                            <span class="text-xs font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-md">${c.category}</span>
-                            <span class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-location-dot text-[10px] text-slate-500 mr-1"></i> ${c.location}</span>
-                            <span class="text-[11px] text-slate-600 font-medium font-mono">${c.id}</span>
+                        <div class="flex items-center flex-wrap gap-2.5">
+                            <span class="text-[10px] font-bold text-indigo-400 bg-indigo-500/5 border border-indigo-500/10 px-2.5 py-0.5 rounded-md uppercase tracking-wider">${c.category}</span>
+                            <span class="text-xs font-semibold text-slate-400"><i class="fa-solid fa-location-dot text-[10px] text-slate-500 mr-1.5"></i>${c.location}</span>
+                            <span class="text-[10px] text-slate-600 font-mono font-bold">${c.id}</span>
                         </div>
                         <p class="text-sm font-medium text-slate-300 leading-relaxed">${c.desc}</p>
-                        <div class="text-xs text-slate-500 font-medium"><i class="fa-regular fa-clock text-[10px] mr-1"></i> ${c.date}</div>
+                        <div class="text-[11px] text-slate-500 font-medium"><i class="fa-regular fa-clock text-[10px] mr-1.5"></i>${c.date}</div>
                     </div>
-                    <div class="flex sm:flex-col items-end justify-between sm:justify-center gap-2 border-t sm:border-t-0 border-slate-800/60 pt-3 sm:pt-0">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full ${
-                            c.status === 'Resolved' 
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                    <div class="flex sm:flex-col items-end justify-between sm:justify-center gap-2 border-t sm:border-t-0 border-slate-900 pt-3 sm:pt-0">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-bold rounded-full ${
+                            c.status === 'Resolved' ? 'bg-emerald-500/5 text-emerald-400 border border-emerald-500/10' : 'bg-amber-500/5 text-amber-400 border border-amber-500/10'
                         }">
                             <span class="w-1.5 h-1.5 rounded-full ${c.status === 'Resolved' ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}"></span>
                             ${c.status}
                         </span>
-                        ${c.status === 'Pending' ? `
-                            <button onclick="resolveComplaint('${c.id}')" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 cursor-pointer bg-indigo-500/5 px-2.5 py-1 rounded-md border border-indigo-500/20 hover:bg-indigo-500/10">Mark Fixed</button>
-                        ` : ''}
-                    </div>
-                `;
+                        ${c.status === 'Pending' ? `<button onclick="resolveComplaint('${c.id}')" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 cursor-pointer bg-indigo-500/5 px-2.5 py-1 rounded-md border border-indigo-500/10 hover:bg-indigo-500/10">Resolve Frame</button>` : ''}
+                    </div>`;
                 list.appendChild(item);
             });
         }
@@ -382,7 +425,7 @@
             const category = document.getElementById('comp-category').value;
             const location = document.getElementById('comp-location').value;
             const desc = document.getElementById('comp-desc').value;
-            const randId = 'CMP-' + Math.floor(1000 + Math.random() * 9000);
+            const randId = 'LOG-' + Math.floor(1000 + Math.random() * 9000);
 
             const newComplaint = { id: randId, category, location, desc, status: 'Pending', date: 'Just Now' };
             complaints.unshift(newComplaint);
@@ -402,44 +445,38 @@
             updateDashboardMetrics();
         }
 
-        // --- FEATURE 3: NOTICE BOARD CONTROLLER ---
+        // Notices Board Presentation Engine
         function renderNotices(filter) {
             const grid = document.getElementById('notices-board-grid');
             grid.innerHTML = '';
-            
             const filtered = filter === 'all' ? notices : notices.filter(n => n.type === filter);
             
             filtered.forEach(n => {
                 const card = document.createElement('div');
-                card.className = `p-6 bg-slate-950 rounded-2xl border transition-all duration-200 flex flex-col justify-between hover:-translate-y-1 ${n.isUrgent ? 'border-rose-500/30 shadow-md shadow-rose-950/10' : 'border-slate-800/80 hover:border-slate-700'}`;
+                card.className = `p-6 bg-slate-950 rounded-2xl border transition-all duration-200 flex flex-col justify-between hover:-translate-y-1 ${n.isUrgent ? 'border-rose-500/20 shadow-lg shadow-rose-950/5' : 'border-slate-900'}`;
                 
                 card.innerHTML = `
                     <div class="space-y-4">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-md border ${n.tagColor}">${n.type}</span>
+                            <span class="text-[10px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-md border ${n.tagColor}">${n.type}</span>
                             <span class="text-xs font-semibold text-slate-500">${n.time}</span>
                         </div>
-                        <div class="space-y-1.5">
-                            <div class="text-xs font-bold text-slate-400 tracking-wide uppercase">${n.label}</div>
+                        <div class="space-y-2">
+                            <div class="text-[10px] font-bold text-slate-500 tracking-wider uppercase">${n.label}</div>
                             <h4 class="text-base font-bold text-white leading-snug">${n.title}</h4>
-                            <p class="text-sm font-medium text-slate-400 leading-relaxed">${n.content}</p>
+                            <p class="text-xs font-semibold text-slate-400 leading-relaxed">${n.content}</p>
                         </div>
                     </div>
-                    ${n.isUrgent ? `
-                        <div class="mt-6 pt-3 border-t border-rose-500/10 flex items-center gap-2 text-xs font-bold text-rose-400">
-                            <i class="fa-solid fa-circle-nodes animate-spin"></i> Priority Broadcast Directive Action
-                        </div>
-                    ` : ''}
-                `;
+                    ${n.isUrgent ? `<div class="mt-6 pt-3 border-t border-rose-500/5 flex items-center gap-2 text-xs font-bold text-rose-400"><i class="fa-solid fa-radiation animate-spin"></i> Urgent Operational Directive</div>` : ''}`;
                 grid.appendChild(card);
             });
         }
 
         function filterNotices(type) {
             document.querySelectorAll('.notice-filter-btn').forEach(btn => {
-                btn.className = "notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-slate-900 text-slate-400 hover:text-slate-200 rounded-lg transition-all";
+                btn.className = "notice-filter-btn px-4 py-2 text-xs font-bold bg-[#070a13] text-slate-400 hover:text-slate-200 rounded-lg transition-all cursor-pointer";
             });
-            document.getElementById(`filter-${type}`).className = "notice-filter-btn px-4 py-1.5 text-xs font-semibold bg-indigo-600 text-white rounded-lg transition-all shadow-sm";
+            document.getElementById(`filter-${type}`).className = "notice-filter-btn px-4 py-2 text-xs font-bold bg-indigo-600 text-white rounded-lg transition-all cursor-pointer shadow-md";
             renderNotices(type);
         }
     </script>
